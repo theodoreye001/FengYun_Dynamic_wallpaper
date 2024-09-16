@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地球图像显示</title>
+    <meta http-equiv="refresh" content="1800">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .earth-image {
+            width: 70vmin;
+            height: 70vmin;
+            border-radius: 50%;
+            background: url(https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg) no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="earth-image"></div>
+    </div>
+</body>
+</html>
