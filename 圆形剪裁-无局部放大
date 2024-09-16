@@ -12,9 +12,6 @@
             background-color: #000000;
             height: 100vh;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         .container {
             position: relative;
@@ -30,6 +27,13 @@
             border-radius: 50%;
             background: url(https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg) no-repeat;
             background-size: cover;
+        }
+
+        @media (orientation: landscape) {
+            .container {
+                justify-content: flex-end;
+                padding-right: 5vw; /* 添加一些右侧间距 */
+            }
         }
     </style>
 </head>
