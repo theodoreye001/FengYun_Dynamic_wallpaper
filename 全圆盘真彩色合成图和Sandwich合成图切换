@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地球图像显示</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .earth-image {
+            width: 70vmin;
+            height: 70vmin;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out;
+        }
+
+        @media (orientation: landscape) {
+            .container {
+                justify-content: flex-end;
+                padding-right: 5vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="earth-image" id="earthImage"></div>
+    </div>
+
+    <script>
+        const baseUrls = [
+            "http://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/GCLR/FY4B_DISK_GCLR.JPG",
+            "http://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/SWCI/FY4B_DISK_SWCI.JPG"
+        ];
+        let currentIndex = 0;
+        const earthImage = document.getElementById('earthImage');
+
+        function addRandomQueryParam(url) {
+            return `${url}?nocache=${new Date().getTime()}`;
+        }
+
+        function switchImage() {
+            currentIndex = (currentIndex + 1) % baseUrls.length;
+            const newImageUrl = addRandomQueryParam(baseUrls[currentIndex]);
+            
+            // 创建一个新的Image对象来预加载图片
+            const img = new Image();
+            img.onload = function() {
+                earthImage.style.backgroundImage = `url(${newImageUrl})`;
+                // 删除旧图片的引用，帮助浏览器释放内存
+                URL.revokeObjectURL(earthImage.style.backgroundImage.slice(5, -2));
+            };
+            img.onerror = function() {
+                console.log("Image failed to load. Trying the other image.");
+                switchImage(); // 递归调用以尝试下一张图片
+            };
+            img.src = newImageUrl;
+        }
+
+        // 初始化图片
+        earthImage.style.backgroundImage = `url(${addRandomQueryParam(baseUrls[currentIndex])})`;
+
+        // 每30分钟切换一次图片
+        setInterval(switchImage, 30 * 60 * 1000);
+
+        // 预加载图片并检查是否可以加载
+        function preloadAndCheckImages() {
+            baseUrls.forEach((src, index) => {
+                const img = new Image();
+                img.src = addRandomQueryParam(src);
+                img.onerror = () => {
+                    console.log(`Image ${index} failed to load. Removing from rotation.`);
+                    baseUrls.splice(index, 1);
+                };
+            });
+        }
+
+        preloadAndCheckImages();
+    </script>
+</body>
+</html>
