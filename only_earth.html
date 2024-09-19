@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地球图像显示</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .earth-image {
+            width: 70vmin;
+            height: 70vmin;
+            border-radius: 50%;
+            background-size: cover;
+        }
+        .time-display {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1rem;
+            margin-top: 10px;
+            text-align: center;
+        }
+        @media (orientation: landscape) {
+            .container {
+                align-items: flex-end;
+                padding-right: 6vw;
+            }
+            .earth-image-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="earth-image-wrapper">
+            <div class="earth-image"></div>
+            <div class="time-display"></div>
+        </div>
+    </div>
+    <script>
+        const imageUrl = 'https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg';
+        const refreshInterval = 1800000; // 10分钟
+        const preloadTime = 10000; // 10秒
+        let cachedImage = null;
+
+        function loadImage(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = url;
+            });
+        }
+
+        function updateImage() {
+            const earthImage = document.querySelector('.earth-image');
+            if (cachedImage) {
+                earthImage.style.backgroundImage = `url(${cachedImage.src})`;
+                cachedImage = null; // 清除缓存
+            }
+            updateTime();
+        }
+
+        function updateTime() {
+            const timeDisplay = document.querySelector('.time-display');
+            const now = new Date();
+            timeDisplay.textContent = now.toLocaleString('zh-CN');
+        }
+
+        function preloadImage() {
+            loadImage(imageUrl)
+                .then(img => {
+                    cachedImage = img;
+                })
+                .catch(error => console.error('预加载图片失败:', error));
+        }
+
+        function scheduleNextUpdate() {
+            setTimeout(() => {
+                preloadImage();
+                setTimeout(() => {
+                    updateImage();
+                    scheduleNextUpdate();
+                }, preloadTime);
+            }, refreshInterval - preloadTime);
+        }
+
+        // 初始加载
+        loadImage(imageUrl)
+            .then(img => {
+                document.querySelector('.earth-image').style.backgroundImage = `url(${img.src})`;
+                updateTime();
+                scheduleNextUpdate();
+            })
+            .catch(error => console.error('初始图片加载失败:', error));
+    </script>
+</body>
+</html>
