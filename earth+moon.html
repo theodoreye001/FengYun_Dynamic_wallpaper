@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>地球和月球图像显示</title>
+    <meta http-equiv="refresh" content="1800">
     <style>
         body {
             margin: 0;
@@ -19,153 +20,64 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            padding-right: 5vw;
-        }
-        .image-wrapper {
-            position: relative;
-            width: 70vmin;
-            height: 70vmin;
-        }
-        .earth-image, .moon-image {
-            background-size: cover;
-            border-radius: 50%;
-            position: absolute;
         }
         .earth-image {
-            width: 100%;
-            height: 100%;
-            z-index: 1;
+            width: 70vmin;
+            height: 70vmin;
+            border-radius: 50%;
+            background: url(https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg) no-repeat;
+            background-size: cover;
+            margin-right: 10vmin;
         }
         .moon-image {
+            position: absolute;
             width: 20vmin;
             height: 20vmin;
-            top: -12vmin;
-            left: -40vmin;
+            border-radius: 50%;
+            background-size: cover;
+            top: 10vmin;
+            left: 10vmin;
             z-index: 2;
         }
-        .time-display {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 1rem;
-            position: absolute;
-            bottom: 10px;
-            right: 5vw;
-            text-align: right;
-        }
-        @media (max-width: 768px) {
+        
+        /* 竖屏布局 */
+        @media (orientation: portrait) {
             .container {
-                justify-content: center;
-                padding-right: 0;
-            }
-            .image-wrapper {
-                display: flex;
                 flex-direction: column;
-                align-items: center;
-                height: auto;
+                justify-content: center;
+                align-items: flex-end;
             }
             .earth-image {
-                position: relative;
+                margin-right: 5vmin;
+                margin-bottom: 5vmin;
             }
             .moon-image {
-                position: relative;
-                top: 10px;
-                left: 0;
-                margin-top: 20px;
-            }
-            .time-display {
-                position: relative;
-                text-align: center;
-                right: auto;
-                margin-top: 10px;
+                top: 10vmin;
+                right: 80vmin;
+                left: auto;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="image-wrapper">
-            <div class="earth-image"></div>
-            <div class="moon-image"></div>
-        </div>
-        <div class="time-display"></div>
+        <div class="moon-image"></div>
+        <div class="earth-image"></div>
     </div>
     <script>
-        const earthImageUrl = 'https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg';
-        const refreshInterval = 1800000; // 30分钟
-        const preloadTime = 10000; // 10秒
-        let cachedEarthImage = null;
-        let cachedMoonImage = null;
-
         function getMoonImageUrl() {
             const baseDate = new Date('2024-09-19');
             const baseNumber = 6301;
-            const today = new Date();
+            const today = new Date();            
             const daysDiff = Math.floor((today - baseDate) / (24 * 60 * 60 * 1000));
-            const urlNumber = baseNumber + (daysDiff * 24);
+            const urlNumber = baseNumber + (daysDiff*24);
             return `https://moon.nasa.gov/mvg.2024/${urlNumber}.jpg`;
         }
-
-        function loadImage(url) {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                img.onload = () => resolve(img);
-                img.onerror = reject;
-                img.src = url;
-            });
-        }
-
-        function updateImages() {
-            const earthImage = document.querySelector('.earth-image');
+        // 设置月球图像的背景
+        document.addEventListener('DOMContentLoaded', function() {
             const moonImage = document.querySelector('.moon-image');
-            if (cachedEarthImage) {
-                earthImage.style.backgroundImage = `url(${cachedEarthImage.src})`;
-                cachedEarthImage = null;
-            }
-            if (cachedMoonImage) {
-                moonImage.style.backgroundImage = `url(${cachedMoonImage.src})`;
-                cachedMoonImage = null;
-            }
-            updateTime();
-        }
-
-        function updateTime() {
-            const timeDisplay = document.querySelector('.time-display');
-            const now = new Date();
-            timeDisplay.textContent = now.toLocaleString('zh-CN');
-        }
-
-        function preloadImages() {
-            loadImage(earthImageUrl)
-                .then(img => {
-                    cachedEarthImage = img;
-                })
-                .catch(error => console.error('预加载地球图片失败:', error));
-
-            loadImage(getMoonImageUrl())
-                .then(img => {
-                    cachedMoonImage = img;
-                })
-                .catch(error => console.error('预加载月球图片失败:', error));
-        }
-
-        function scheduleNextUpdate() {
-            setTimeout(() => {
-                preloadImages();
-                setTimeout(() => {
-                    updateImages();
-                    scheduleNextUpdate();
-                }, preloadTime);
-            }, refreshInterval - preloadTime);
-        }
-
-        // 初始加载
-        Promise.all([loadImage(earthImageUrl), loadImage(getMoonImageUrl())])
-            .then(([earthImg, moonImg]) => {
-                document.querySelector('.earth-image').style.backgroundImage = `url(${earthImg.src})`;
-                document.querySelector('.moon-image').style.backgroundImage = `url(${moonImg.src})`;
-                updateTime();
-                scheduleNextUpdate();
-            })
-            .catch(error => console.error('初始图片加载失败:', error));
+            moonImage.style.backgroundImage = `url(${getMoonImageUrl()})`;
+        });
     </script>
 </body>
 </html>
