@@ -11,8 +11,8 @@ https://zhuanlan.zhihu.com/p/648838771
 - http://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/GCLR/FY4B_REGC_GCLR.JPG FY-4B最新中国区云图
 - https://moon.nasa.gov/moon-observation/daily-moon-guide/?intent=021 月球图片来源
 # 实例图片
-月球+地球![image](https://github.com/user-attachments/assets/fcfe7c48-fde6-48b2-9739-96139b4d7489)
-只有地球（带更新时间）![image](https://github.com/user-attachments/assets/5a7ca043-966c-491b-91a1-82b544b1ee19)
-地球+展开中国![image](https://github.com/user-attachments/assets/322771e4-9226-42ce-ab14-0aa5eed4b886)
+月球+地球![image](https://github.com/user-attachments/assets/43025cf9-e73e-48ae-b97f-622e60d807aa)
+地球（带更新时间）![image](https://github.com/user-attachments/assets/5a7ca043-966c-491b-91a1-82b544b1ee19)
+地球+中国云图展开![image](https://github.com/user-attachments/assets/322771e4-9226-42ce-ab14-0aa5eed4b886)
 
 
