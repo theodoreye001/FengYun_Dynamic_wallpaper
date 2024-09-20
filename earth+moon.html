@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>地球和月球图像显示</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta http-equiv="refresh" content="1800">
     <style>
         body {
@@ -27,16 +30,16 @@
             border-radius: 50%;
             background: url(https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg) no-repeat;
             background-size: cover;
-            margin-right: 10vmin;
+            margin-right: 5vmin;
         }
         .moon-image {
             position: absolute;
-            width: 20vmin;
-            height: 20vmin;
+            width: 5vmin; /* 宽尺寸*/
+            height: 5vmin; /* 高尺寸 */
             border-radius: 50%;
             background-size: cover;
-            top: 10vmin;
-            left: 10vmin;
+            top: 8vmin; /* 地球的右上角 */
+            right: 10vmin; /* 地球的右上角 */
             z-index: 2;
         }
         
@@ -53,7 +56,7 @@
             }
             .moon-image {
                 top: 10vmin;
-                right: 80vmin;
+                right: 10vmin; /* 地球的右上角 */
                 left: auto;
             }
         }
@@ -73,10 +76,25 @@
             const urlNumber = baseNumber + (daysDiff*24);
             return `https://moon.nasa.gov/mvg.2024/${urlNumber}.jpg`;
         }
+        function clearCache() {
+            // 清除页面缓存
+            window.location.reload(true);
+        }
         // 设置月球图像的背景
         document.addEventListener('DOMContentLoaded', function() {
             const moonImage = document.querySelector('.moon-image');
             moonImage.style.backgroundImage = `url(${getMoonImageUrl()})`;
+            // 添加事件监听器以在页面刷新时清除缓存
+            window.addEventListener('beforeunload', clearCache);
+        });
+        // 强制重新加载地球图像
+        window.addEventListener('load', function() {
+            const earthImage = document.querySelector('.earth-image');
+            const currentBg = earthImage.style.backgroundImage;
+            earthImage.style.backgroundImage = 'none';
+            setTimeout(() => {
+                earthImage.style.backgroundImage = `url(https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg?_=${Date.now()})`;
+            }, 50);
         });
     </script>
 </body>
