@@ -69,12 +69,17 @@
     </div>
     <script>
         function getMoonImageUrl() {
-            const baseDate = new Date('2024-09-19');
-            const baseNumber = 6301;
+            const currentYear = new Date().getFullYear()
+            const baseDate = new Date(`${currentYear}-01-01`);
+            const baseNumber = 13;
             const today = new Date();            
             const daysDiff = Math.floor((today - baseDate) / (24 * 60 * 60 * 1000));
             const urlNumber = baseNumber + (daysDiff*24);
-            return `https://moon.nasa.gov/mvg.2024/${urlNumber}.jpg`;
+            let stringurlNumber = urlNumber.toString();
+            while (stringurlNumber.length < 4) {
+                stringurlNumber = '0' + stringurlNumber;
+            }
+            return `https://moon.nasa.gov/mvg.${currentYear}/${stringurlNumber}.jpg`;
         }
         function clearCache() {
             // 清除页面缓存
