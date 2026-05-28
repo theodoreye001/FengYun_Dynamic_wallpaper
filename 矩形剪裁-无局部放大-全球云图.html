@@ -17,11 +17,15 @@
   </style>
 </head>
 <body>
-  <div class="earth-image"></div>
+  <div class="container">
+    <div class="earth-image"></div>
+  </div>
   <script src="assets/wallpaper.js"></script>
   <script>
-    function getAlignedUrl() {
+    function getAlignedUrl(hoursBack) {
+      var offset = hoursBack !== undefined ? hoursBack : 1;
       var now = new Date();
+      now.setUTCHours(now.getUTCHours() - offset);
       var year = now.getUTCFullYear();
       var month = String(now.getUTCMonth() + 1).padStart(2, '0');
       var day = String(now.getUTCDate()).padStart(2, '0');
@@ -33,13 +37,17 @@
 
     document.addEventListener('DOMContentLoaded', function () {
       var earthEl = document.querySelector('.earth-image');
-      var url = getAlignedUrl();
+      var url = getAlignedUrl(1);
 
       refreshImage(earthEl, url, { skipCacheBust: true });
 
+      var lastUrl = url;
       setInterval(function () {
-        var newUrl = getAlignedUrl();
-        refreshImage(earthEl, newUrl, { skipCacheBust: true });
+        var newUrl = getAlignedUrl(1);
+        if (newUrl !== lastUrl) {
+          lastUrl = newUrl;
+          refreshImage(earthEl, newUrl, { skipCacheBust: true });
+        }
       }, 1800000);
     });
   </script>

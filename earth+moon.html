@@ -54,6 +54,9 @@
       var now = new Date();
       var currentYear = now.getFullYear();
       var baseDate = new Date(currentYear + '-01-01');
+      // Offset constant derived from NASA Moon Visualization Gallery (moon.nasa.gov/mvg.YYYY/).
+      // The gallery indexes hourly moon images starting from this offset at the beginning of each year.
+      // If images fail to load, the moon div is hidden gracefully.
       var baseNumber = 13;
       var daysDiff = Math.floor((now - baseDate) / (24 * 60 * 60 * 1000));
       var currentHourUTC = now.getUTCHours();

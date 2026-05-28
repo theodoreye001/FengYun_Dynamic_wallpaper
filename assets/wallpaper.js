@@ -29,25 +29,40 @@ function preloadImage(url) {
 /**
  * Refresh an element's background image with preloading and error fallback.
  * Keeps the last successful image on failure and shows a retry message.
+ * Retries with exponential backoff up to maxRetries attempts.
  * @param {HTMLElement} element - The DOM element to update
  * @param {string} url - The image URL (will be cache-busted)
  * @param {object} [options] - Optional settings
- * @param {number} [options.retryDelay] - Retry delay in ms (default 60000)
+ * @param {number} [options.retryDelay] - Initial retry delay in ms (default 60000)
  * @param {boolean} [options.skipCacheBust] - If true, skip adding cache-bust param
+ * @param {number} [options.maxRetries] - Max retry attempts (default 5)
+ * @param {number} [options._retryCount] - Internal: current retry count
  */
 function refreshImage(element, url, options) {
   var opts = options || {};
   var retryDelay = opts.retryDelay || 60000;
+  var maxRetries = opts.maxRetries !== undefined ? opts.maxRetries : 5;
+  var retryCount = opts._retryCount || 0;
   var finalUrl = opts.skipCacheBust ? url : cacheBust(url);
 
   preloadImage(finalUrl).then(function (img) {
     element.style.backgroundImage = 'url(' + img.src + ')';
     hideError(element);
   }).catch(function () {
+    if (retryCount >= maxRetries) {
+      showError(element, 'Image unavailable');
+      return;
+    }
     showError(element, 'Retrying...');
+    var nextDelay = retryDelay * Math.pow(1.5, retryCount);
     setTimeout(function () {
-      refreshImage(element, url, options);
-    }, retryDelay);
+      refreshImage(element, url, {
+        retryDelay: retryDelay,
+        skipCacheBust: opts.skipCacheBust,
+        maxRetries: maxRetries,
+        _retryCount: retryCount + 1
+      });
+    }, nextDelay);
   });
 }
 
