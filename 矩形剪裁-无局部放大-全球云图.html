@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>矩形地球图像显示</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .earth-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="earth-image"></div>
+  </div>
+  <script src="assets/wallpaper.js"></script>
+  <script>
+    function getAlignedUrl(hoursBack) {
+      var offset = hoursBack !== undefined ? hoursBack : 1;
+      var now = new Date();
+      now.setUTCHours(now.getUTCHours() - offset);
+      var year = now.getUTCFullYear();
+      var month = String(now.getUTCMonth() + 1).padStart(2, '0');
+      var day = String(now.getUTCDate()).padStart(2, '0');
+      var hour = String(now.getUTCHours()).padStart(2, '0');
+      var dateStr = year + '' + month + day;
+      var timeStr = hour + '00';
+      return 'https://img.nsmc.org.cn/CLOUDIMAGE/GEOS/MOS/IRX/PIC/GBAL/GEOS_IMAGR_GBAL_L2_MOS_IRX_GLL_' + dateStr + '_' + timeStr + '_10KM_MS.jpg';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var earthEl = document.querySelector('.earth-image');
+      var url = getAlignedUrl(1);
+
+      refreshImage(earthEl, url, { skipCacheBust: true });
+
+      var lastUrl = url;
+      setInterval(function () {
+        var newUrl = getAlignedUrl(1);
+        if (newUrl !== lastUrl) {
+          lastUrl = newUrl;
+          refreshImage(earthEl, newUrl, { skipCacheBust: true });
+        }
+      }, 1800000);
+    });
+  </script>
+</body>
+</html>

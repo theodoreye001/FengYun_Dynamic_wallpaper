@@ -1,0 +1,7 @@
+{
+  "task_id": "task-full-optimization",
+  "task_description": "Complete optimization of FengYun Dynamic Wallpaper repository: fix all bugs, reorganize files with .html extensions, extract shared assets, replace meta-refresh with JS smooth swap, unify cache-busting, add error fallbacks, create index page, update README, add .gitignore and LICENSE.",
+  "status": "in_progress",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "blocked_reason": null
+}

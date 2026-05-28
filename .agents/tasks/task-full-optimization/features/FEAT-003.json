@@ -1,0 +1,25 @@
+{
+  "id": "FEAT-003",
+  "type": "docs",
+  "description": "Create index.html landing page, update README with layout table, add .gitignore and MIT LICENSE file.",
+  "status": "pending",
+  "steps": [
+    "1. Create `index.html` - a landing/index page with dark theme matching the wallpaper aesthetic. List all 6 wallpaper layouts with: filename (as clickable link), description of what it shows, and suitable orientation (landscape/portrait/both). Use preview images from the README GitHub assets URLs. Link assets/style.css for consistent styling.",
+    "2. Update `README.md` - Add a markdown table documenting all 6 layouts: | Filename | Description | Orientation | with proper descriptions. Keep existing content (background section, links, images) but reorganize for clarity. Update any broken references due to file renames (add .html to Chinese filenames in any references).",
+    "3. Create `.gitignore` with common entries: .DS_Store, Thumbs.db, *.swp, *.swo, .idea/, .vscode/, *.log",
+    "4. Create `LICENSE` file with MIT license text, using current year and 'FengYun Dynamic Wallpaper Contributors' as copyright holder."
+  ],
+  "acceptance_criteria": [
+    "index.html exists and links to all 6 wallpaper HTML files",
+    "README.md contains a table with all 6 layouts, descriptions, and orientations",
+    ".gitignore exists with standard entries",
+    "LICENSE file exists with MIT license"
+  ],
+  "verification": [
+    "Verify index.html contains links to all 6 HTML wallpaper files",
+    "Verify README.md has a markdown table with 6 rows",
+    "Verify .gitignore and LICENSE files exist and have correct content"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

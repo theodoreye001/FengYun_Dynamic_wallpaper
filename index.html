@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FengYun Dynamic Wallpaper</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    body {
+      overflow: auto;
+      height: auto;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #e0e0e0;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 2rem;
+    }
+
+    .wallpaper-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .wallpaper-card {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .wallpaper-card:hover {
+      border-color: #666;
+    }
+
+    .wallpaper-card a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .wallpaper-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .wallpaper-card .placeholder {
+      width: 100%;
+      height: 200px;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #444;
+      font-size: 1.5rem;
+    }
+
+    .wallpaper-card .info {
+      padding: 1rem;
+    }
+
+    .wallpaper-card .info h2 {
+      font-size: 1rem;
+      margin: 0 0 0.5rem 0;
+      color: #fff;
+    }
+
+    .wallpaper-card .info p {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.875rem;
+      color: #aaa;
+    }
+
+    .wallpaper-card .info .orientation {
+      display: inline-block;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.75rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>FengYun Dynamic Wallpaper</h1>
+  <p class="subtitle">Real-time satellite imagery wallpapers from FengYun-4B</p>
+
+  <div class="wallpaper-grid">
+    <div class="wallpaper-card">
+      <a href="earth+moon.html">
+        <img src="https://github.com/user-attachments/assets/43025cf9-e73e-48ae-b97f-622e60d807aa" alt="Earth + Moon">
+        <div class="info">
+          <h2>earth+moon.html</h2>
+          <p>Full-disk Earth view with daily Moon phase image from NASA.</p>
+          <span class="orientation">Landscape</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="wallpaper-card">
+      <a href="only_earth.html">
+        <img src="https://github.com/user-attachments/assets/5a7ca043-966c-491b-91a1-82b544b1ee19" alt="Earth with time display">
+        <div class="info">
+          <h2>only_earth.html</h2>
+          <p>Circular full-disk Earth with update timestamp overlay.</p>
+          <span class="orientation">Landscape / Portrait</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="wallpaper-card">
+      <a href="全圆盘真彩色合成图和Sandwich合成图切换.html">
+        <div class="placeholder">True Color / Sandwich</div>
+        <div class="info">
+          <h2>全圆盘真彩色合成图和Sandwich合成图切换.html</h2>
+          <p>Switches between true color composite and Sandwich composite full-disk images.</p>
+          <span class="orientation">Landscape / Portrait</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="wallpaper-card">
+      <a href="卫星图+桌面壁纸-局部放大.html">
+        <img src="https://github.com/user-attachments/assets/322771e4-9226-42ce-ab14-0aa5eed4b886" alt="Earth + zoomed regional view">
+        <div class="info">
+          <h2>卫星图+桌面壁纸-局部放大.html</h2>
+          <p>Full-disk Earth with a zoomed regional satellite view (e.g., China cloud map).</p>
+          <span class="orientation">Landscape / Portrait</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="wallpaper-card">
+      <a href="圆形剪裁-无局部放大.html">
+        <div class="placeholder">Circular Crop</div>
+        <div class="info">
+          <h2>圆形剪裁-无局部放大.html</h2>
+          <p>Circular cropped Earth view without regional zoom panel.</p>
+          <span class="orientation">Landscape / Portrait</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="wallpaper-card">
+      <a href="矩形剪裁-无局部放大-全球云图.html">
+        <div class="placeholder">Global Cloud Map</div>
+        <div class="info">
+          <h2>矩形剪裁-无局部放大-全球云图.html</h2>
+          <p>Full rectangular global cloud map composite from geostationary satellites.</p>
+          <span class="orientation">Landscape</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

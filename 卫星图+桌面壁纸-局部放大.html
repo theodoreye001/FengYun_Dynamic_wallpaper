@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>地球图像显示与局部放大</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .zoom-window {
+      border: 2px solid white;
+      background-size: cover;
+      background-repeat: no-repeat;
+      position: absolute;
+    }
+    @media (orientation: landscape) {
+      .earth-image {
+        position: absolute;
+        right: 20vmin;
+        bottom: 20vmin;
+      }
+      .zoom-window {
+        width: 24vmin;
+        height: 15vmin;
+        right: 2vmin;
+        bottom: 6vmin;
+      }
+    }
+    @media (orientation: portrait) {
+      .container {
+        flex-direction: column;
+      }
+      .earth-image {
+        margin-bottom: 2vmin;
+      }
+      .zoom-window {
+        width: 78vmin;
+        height: 49vmin;
+        position: relative;
+        margin-top: 2vmin;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="earth-image"></div>
+    <div class="zoom-window"></div>
+  </div>
+  <script src="assets/wallpaper.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var earthEl = document.querySelector('.earth-image');
+      var zoomEl = document.querySelector('.zoom-window');
+      var earthUrl = getImageSource('https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg');
+      var zoomUrl = 'https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/GCLR/FY4B_REGC_GCLR.JPG';
+
+      startAutoRefresh(earthEl, earthUrl);
+      startAutoRefresh(zoomEl, zoomUrl);
+    });
+  </script>
+</body>
+</html>
