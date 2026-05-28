@@ -1,0 +1,38 @@
+{
+  "id": "FEAT-002",
+  "type": "refactor",
+  "description": "Rename files to add .html extension, extract shared assets (CSS + JS), replace meta-refresh with JS smooth image swap, unify cache-busting, add error fallback for all images, switch all URLs to HTTPS, add URL query parameter support, and normalize indentation to 2 spaces across all files.",
+  "status": "in_progress",
+  "steps": [
+    "1. Rename files using git mv: '全圆盘真彩色合成图和Sandwich合成图切换' -> '全圆盘真彩色合成图和Sandwich合成图切换.html', '卫星图+桌面壁纸-局部放大' -> '卫星图+桌面壁纸-局部放大.html', '圆形剪裁-无局部放大' -> '圆形剪裁-无局部放大.html', '矩形剪裁-无局部放大-全球云图' -> '矩形剪裁-无局部放大-全球云图.html'",
+    "2. Create `assets/style.css` with shared styles extracted from all files: body (margin:0, padding:0, bg:#000, height:100vh, overflow:hidden), .container (position:relative, width:100%, height:100%, display:flex, justify-content:center, align-items:center), .earth-image (width:70vmin, height:70vmin, border-radius:50%, background-size:cover), .error-message (small retry indicator styling). Include landscape media query for right-aligned layout.",
+    "3. Create `assets/wallpaper.js` with shared logic: (a) bucket-based cache busting aligned to 15-min satellite interval: `const bucket = Math.floor(Date.now() / (15*60*1000)); url + '?t=' + bucket`, (b) image preload function that returns a promise, (c) smooth image swap function that preloads then sets backgroundImage without page reload, (d) error fallback with retry - when image fails show last successful image and display small retry message, (e) setInterval-based refresh (default 30 min), (f) URL query parameter support - check `new URLSearchParams(window.location.search).get('src')` to override default image URL. Export these as global functions.",
+    "4. Update `earth+moon.html`: Remove <meta http-equiv='refresh'>, link assets/style.css, include assets/wallpaper.js via <script src>, use shared functions for earth image loading with setInterval refresh (no page reload). Keep moon-specific logic inline but use shared cache-busting and error fallback. Normalize to 2-space indent.",
+    "5. Update `only_earth.html`: Remove any meta refresh if present, link assets/style.css, include assets/wallpaper.js, use shared functions. Keep time display logic inline. Normalize to 2-space indent.",
+    "6. Update `全圆盘真彩色合成图和Sandwich合成图切换.html`: Link assets/style.css, include assets/wallpaper.js, use shared cache-busting and error fallback. Keep switching logic inline but simplified using shared preload/swap. Normalize to 2-space indent.",
+    "7. Update `卫星图+桌面壁纸-局部放大.html`: Remove <meta http-equiv='refresh'>, link assets/style.css, include assets/wallpaper.js, use shared refresh via setInterval. Keep zoom-window specific styles inline. Normalize to 2-space indent.",
+    "8. Update `圆形剪裁-无局部放大.html`: Remove <meta http-equiv='refresh'>, link assets/style.css, include assets/wallpaper.js, use shared refresh. Normalize to 2-space indent.",
+    "9. Update `矩形剪裁-无局部放大-全球云图.html`: Remove <meta http-equiv='refresh'>, link assets/style.css, include assets/wallpaper.js, keep the UTC time computation logic inline but use shared cache-busting and error fallback. Normalize to 2-space indent.",
+    "10. Ensure all image URLs across all files use https:// not http://.",
+    "11. Normalize all files to consistent 2-space indentation."
+  ],
+  "acceptance_criteria": [
+    "All 4 Chinese-named files have .html extension",
+    "assets/style.css exists with shared styles",
+    "assets/wallpaper.js exists with shared logic (cache busting, preload, error fallback, setInterval refresh, URL param support)",
+    "No file contains <meta http-equiv='refresh'>",
+    "All HTML files reference assets/style.css and assets/wallpaper.js",
+    "No file contains http://img.nsmc.org.cn (all https)",
+    "All files use 2-space indentation",
+    "URL query param ?src=... overrides default image source when present"
+  ],
+  "verification": [
+    "Grep for 'meta http-equiv=\"refresh\"' across all files - should find none",
+    "Grep for 'http://img' across all files - should find none",
+    "Verify assets/style.css and assets/wallpaper.js exist",
+    "Check that all 6 HTML files reference the shared assets",
+    "Verify old files without .html extension no longer exist (only .html versions)"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

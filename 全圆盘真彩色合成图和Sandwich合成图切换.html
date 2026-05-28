@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>地球图像显示</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .earth-image {
+      transition: background-image 1s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="earth-image" id="earthImage"></div>
+  </div>
+  <script src="assets/wallpaper.js"></script>
+  <script>
+    var baseUrls = [
+      'https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/GCLR/FY4B_DISK_GCLR.JPG',
+      'https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/SWCI/FY4B_DISK_SWCI.JPG'
+    ];
+    var currentIndex = 0;
+    var earthImage = document.getElementById('earthImage');
+
+    function switchImage() {
+      currentIndex = (currentIndex + 1) % baseUrls.length;
+      refreshImage(earthImage, baseUrls[currentIndex]);
+    }
+
+    // Initial load
+    refreshImage(earthImage, baseUrls[currentIndex]);
+
+    // Switch image every 30 minutes
+    setInterval(switchImage, 30 * 60 * 1000);
+  </script>
+</body>
+</html>

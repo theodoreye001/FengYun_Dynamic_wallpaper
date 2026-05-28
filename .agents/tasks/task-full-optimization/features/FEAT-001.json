@@ -1,0 +1,31 @@
+{
+  "id": "FEAT-001",
+  "type": "fix",
+  "description": "Fix all bugs in existing HTML files (Priority 1 items): Fix 矩形剪裁 URL placeholder, fix earth+moon.html moon algorithm and anti-pattern, fix 全圆盘真彩色 issues (http/revokeObjectURL/splice), fix only_earth.html comment mismatch",
+  "status": "completed",
+  "steps": [
+    "1. Fix `矩形剪裁-无局部放大-全球云图`: Add a <script> section that computes current UTC time, aligns to the nearest hour (satellite publishes hourly), formats as YYYYMMDD_HHmm, and sets the .earth-image background-image URL dynamically replacing the placeholder. Also change http:// to https://.",
+    "2. Fix `earth+moon.html` moon URL algorithm: Replace `baseNumber = 13` with a proper calculation using `daysDiff * 24 + currentHourUTC` for hour-level accuracy. Add img.onerror fallback that hides the moon-image div or shows a placeholder when the image URL fails.",
+    "3. Fix `earth+moon.html` anti-pattern: Remove the `beforeunload` + `reload(true)` clearCache function entirely. Remove the window load listener that does the hacky background reset. Instead use a setInterval-based approach with timestamp cache busting `?t=${bucket}` on each image request.",
+    "4. Fix `earth+moon.html` double-load (Priority 3 item 14): Remove the CSS `background: url(...)` from .earth-image style. Let JS handle setting the background exclusively on DOMContentLoaded.",
+    "5. Fix `全圆盘真彩色合成图和Sandwich合成图切换`: Change both URLs from `http://` to `https://`. Remove the `URL.revokeObjectURL(...)` call (it only works for blob URLs). Fix the `baseUrls.splice(index, 1)` inside forEach - replace with a filter or reverse iteration so indices are not skipped.",
+    "6. Fix `only_earth.html`: Change comment from `// 10分钟` to `// 30分钟` to match the actual 1800000ms interval."
+  ],
+  "acceptance_criteria": [
+    "矩形剪裁 file has JS that dynamically computes the UTC-aligned URL and sets background-image",
+    "earth+moon.html moon URL uses hour-level calculation and has error fallback",
+    "earth+moon.html has no beforeunload/reload(true) code",
+    "earth+moon.html .earth-image CSS has no background: url(...) - JS handles it",
+    "全圆盘真彩色 file uses https:// URLs, has no URL.revokeObjectURL call, and does not splice inside forEach",
+    "only_earth.html comment correctly says 30分钟"
+  ],
+  "verification": [
+    "Grep for 'http://' in all HTML files - should only appear in non-URL contexts or not at all",
+    "Grep for 'revokeObjectURL' - should not exist",
+    "Grep for 'reload(true)' and 'beforeunload' in earth+moon.html - should not exist",
+    "Grep for 'YYYYMMDD_HHmm' in 矩形剪裁 file - should not exist in CSS (should be replaced by JS dynamically)",
+    "Verify the JS in 矩形剪裁 correctly formats Date to the URL pattern"
+  ],
+  "blocked_reason": null,
+  "findings": "All 6 bug fixes applied successfully. No build system or tests to run (static HTML files). Verification grep checks all pass: no http:// in HTML files, no revokeObjectURL, no reload(true), no beforeunload, no YYYYMMDD_HHmm placeholder in CSS."
+}

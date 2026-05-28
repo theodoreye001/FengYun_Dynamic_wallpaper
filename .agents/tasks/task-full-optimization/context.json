@@ -1,0 +1,24 @@
+{
+  "project_type": "Static HTML wallpaper pages using FengYun satellite imagery",
+  "language": "HTML/CSS/JavaScript",
+  "build_system": "None - static HTML files, no build step",
+  "test_framework": "None - manual verification only",
+  "build_command": null,
+  "test_command": null,
+  "verification_instructions": "Open HTML files in browser to verify layout and image loading. For CI, validate HTML syntax.",
+  "snapshot_or_generated_files": null,
+  "setup_instructions": "No setup needed - static HTML files",
+  "environment_constraints": "OPEN_INTERNET - full network access available. No build tools required.",
+  "contribution_requirements": "None specified in repo",
+  "key_patterns": "Each HTML file is a standalone wallpaper page using CSS background-image to display satellite imagery from img.nsmc.org.cn. Pages use meta refresh for periodic updates. Moon image uses NASA moon visualization gallery.",
+  "relevant_files": [
+    "earth+moon.html",
+    "only_earth.html",
+    "全圆盘真彩色合成图和Sandwich合成图切换",
+    "卫星图+桌面壁纸-局部放大",
+    "圆形剪裁-无局部放大",
+    "矩形剪裁-无局部放大-全球云图",
+    "README.md"
+  ],
+  "directory_structure": "Flat structure at root. All HTML wallpaper files at top level. README.md for documentation. No subdirectories except .git."
+}
