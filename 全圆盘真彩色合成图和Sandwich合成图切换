@@ -43,9 +43,9 @@
     </div>
 
     <script>
-        const baseUrls = [
-            "http://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/GCLR/FY4B_DISK_GCLR.JPG",
-            "http://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/SWCI/FY4B_DISK_SWCI.JPG"
+        let baseUrls = [
+            "https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/GCLR/FY4B_DISK_GCLR.JPG",
+            "https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/SWCI/FY4B_DISK_SWCI.JPG"
         ];
         let currentIndex = 0;
         const earthImage = document.getElementById('earthImage');
@@ -62,8 +62,6 @@
             const img = new Image();
             img.onload = function() {
                 earthImage.style.backgroundImage = `url(${newImageUrl})`;
-                // 删除旧图片的引用，帮助浏览器释放内存
-                URL.revokeObjectURL(earthImage.style.backgroundImage.slice(5, -2));
             };
             img.onerror = function() {
                 console.log("Image failed to load. Trying the other image.");
@@ -80,12 +78,14 @@
 
         // 预加载图片并检查是否可以加载
         function preloadAndCheckImages() {
+            const failedIndices = [];
             baseUrls.forEach((src, index) => {
                 const img = new Image();
                 img.src = addRandomQueryParam(src);
                 img.onerror = () => {
                     console.log(`Image ${index} failed to load. Removing from rotation.`);
-                    baseUrls.splice(index, 1);
+                    failedIndices.push(index);
+                    baseUrls = baseUrls.filter((_, i) => !failedIndices.includes(i));
                 };
             });
         }

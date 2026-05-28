@@ -28,7 +28,6 @@
             width: 70vmin;
             height: 70vmin;
             border-radius: 50%;
-            background: url(https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg) no-repeat;
             background-size: cover;
             margin-right: 5vmin;
         }
@@ -69,37 +68,48 @@
     </div>
     <script>
         function getMoonImageUrl() {
-            const currentYear = new Date().getFullYear()
+            const now = new Date();
+            const currentYear = now.getFullYear();
             const baseDate = new Date(`${currentYear}-01-01`);
             const baseNumber = 13;
-            const today = new Date();            
-            const daysDiff = Math.floor((today - baseDate) / (24 * 60 * 60 * 1000));
-            const urlNumber = baseNumber + (daysDiff*24);
+            const daysDiff = Math.floor((now - baseDate) / (24 * 60 * 60 * 1000));
+            const currentHourUTC = now.getUTCHours();
+            const urlNumber = baseNumber + (daysDiff * 24 + currentHourUTC);
             let stringurlNumber = urlNumber.toString();
             while (stringurlNumber.length < 4) {
                 stringurlNumber = '0' + stringurlNumber;
             }
             return `https://moon.nasa.gov/mvg.${currentYear}/${stringurlNumber}.jpg`;
         }
-        function clearCache() {
-            // 清除页面缓存
-            window.location.reload(true);
+
+        function getEarthImageUrl() {
+            return `https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg?t=${Date.now()}`;
         }
-        // 设置月球图像的背景
-        document.addEventListener('DOMContentLoaded', function() {
-            const moonImage = document.querySelector('.moon-image');
-            moonImage.style.backgroundImage = `url(${getMoonImageUrl()})`;
-            // 添加事件监听器以在页面刷新时清除缓存
-            window.addEventListener('beforeunload', clearCache);
-        });
-        // 强制重新加载地球图像
-        window.addEventListener('load', function() {
+
+        function updateEarthImage() {
             const earthImage = document.querySelector('.earth-image');
-            const currentBg = earthImage.style.backgroundImage;
-            earthImage.style.backgroundImage = 'none';
-            setTimeout(() => {
-                earthImage.style.backgroundImage = `url(https://img.nsmc.org.cn/CLOUDIMAGE/FY4B/AGRI/THUMBNAIL/FY4B_AGRI_DISK_GCLR.jpg?_=${Date.now()})`;
-            }, 50);
+            earthImage.style.backgroundImage = `url(${getEarthImageUrl()})`;
+        }
+
+        function updateMoonImage() {
+            const moonImage = document.querySelector('.moon-image');
+            const url = getMoonImageUrl();
+            const img = new Image();
+            img.onload = function() {
+                moonImage.style.backgroundImage = `url(${url})`;
+            };
+            img.onerror = function() {
+                moonImage.style.display = 'none';
+            };
+            img.src = url;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateEarthImage();
+            updateMoonImage();
+
+            // Refresh earth image every 30 minutes
+            setInterval(updateEarthImage, 30 * 60 * 1000);
         });
     </script>
 </body>
