@@ -38,10 +38,37 @@
 
 ## 使用方式
 
-1. 克隆或下载本仓库到本地
-2. 直接用浏览器打开任意 HTML 文件（例如 `only_earth.html`）
-3. 按 F11 进入全屏模式即可作为动态壁纸
-4. 每 15-30 分钟自动刷新最新卫星图像（无闪烁）
+**按照原作者的方法**，制作动态桌面很简单，不用编辑什么爬虫代码之类的，就用一个商城自带的动态壁纸软件——**[Lively Wallpaper](https://www.microsoft.com/store/productId/9WZDNCRFJ0TM)**。
+
+### 具体步骤：
+
+1. **安装动态壁纸软件**：
+   - 打开微软商店 Microsoft Store
+   - 搜索 **"Lively Wallpaper"** 并安装
+   - 启动 Lively Wallpaper 应用
+
+2. **准备壁纸文件**：
+   - 克隆或下载本仓库到本地
+   - 选择一个喜欢的 HTML 壁纸文件（例如 `only_earth.html`）
+
+3. **设置动态壁纸**：
+   - 在 Lively Wallpaper 中，点击 "+" 或 "添加壁纸"
+   - 选择 **"本地点播"** 选项
+   - 导航到刚才下载的 HTML 文件
+   - 点击 "设置" 完成添加
+
+4. **立即享用**：
+   - 壁纸会自动展示卫星实时图像
+   - 每 15-30 分钟自动刷新最新卫星图像（无闪烁）
+   - 无需额外操作，保持运行即可
+
+#### 原作者的描述：
+> 制作动态桌面也很简单，不用编辑什么爬虫代码之类的，就用一个商城自带的动态壁纸软件——**Lively Wallpaper**。商城搜索安装即可使用。这个动态壁纸软件可以直接将网页显示到桌面的。因为链接上的风云4号卫星图片是居中的，所以我们需要把上面的链接处理一下。新建一个文本，把下面一段代码复制进去，保存成html格式存档。以上代码的大概意思就是获取来自链接的图片，图片靠右，进行圆形裁剪。具体的我不太懂，我也是临时百度拼凑出来的，估计大概率是错的，不过显示正常就行。然后用刚刚安装好的Lively Wallpaper设置成背景即可。
+
+注意事项
+- Lively Wallpaper 支持将任意网页作为壁纸，HTML 文件作为本地网页运行
+- 软件在微软商店免费下载，功能完善，无需破解或配置
+- 壁纸文件保存在本地，不需要开放任何权限或账户
 
 ### 高级用法
 
@@ -114,10 +141,29 @@ Modify the image URLs in the code according to your needs.
 
 ## Usage
 
-1. Clone or download this repository.
-2. Open any HTML file directly in a browser (e.g., `only_earth.html`).
-3. Press F11 to enter full‑screen mode and use it as a live wallpaper.
-4. Images refresh automatically every 15‑30 minutes without screen flicker.
+**Following the original author's method**: creating a live desktop wallpaper is straightforward—no need to write crawler code. Simply use a wallpaper app available in the Microsoft Store: **[Lively Wallpaper](https://www.microsoft.com/store/productId/9WZDNCRFJ0TM)**.
+
+### Step‑by‑step Guide
+
+1. **Install Lively Wallpaper**:
+   - Open the Microsoft Store
+   - Search for **"Lively Wallpaper"** and install it
+   - Launch the Lively Wallpaper app
+
+2. **Prepare Wallpaper Files**:
+   - Clone or download this repository to your computer
+   - Choose a wallpaper HTML file (e.g., `only_earth.html`)
+
+3. **Set the Live Wallpaper**:
+   - In Lively Wallpaper, click "+" or "Add Wallpaper"
+   - Select **"Local File"** (sometimes called "Local Playlist")
+   - Navigate to the downloaded HTML file
+   - Click "Set" to finish
+
+4. **Enjoy Immediately**:
+   - The wallpaper will display real‑time satellite imagery
+   - Images refresh automatically every 15‑30 minutes without screen flicker
+   - No further action required—just keep it running
 
 ### Advanced
 
